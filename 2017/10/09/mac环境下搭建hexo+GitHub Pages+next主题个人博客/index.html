@@ -99,7 +99,8 @@
 <meta property="og:image" content="http://yoursite.com/uploads/githubr.png">
 <meta property="og:image" content="http://yoursite.com/uploads/githubnew.png">
 <meta property="og:image" content="http://yoursite.com/uploads/repo.png">
-<meta property="og:updated_time" content="2017-10-09T09:07:08.000Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/jeasonstudio/images/8b550fd8d102bf7625f47511b35489612626636d/20160526/hexo4000.png">
+<meta property="og:updated_time" content="2017-10-09T17:56:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mac环境下搭建hexo+github pages+next个人博客">
 <meta name="twitter:description" content="最近，在网上学习了通过GitHub Pages + hexo 搭建个人博客的方法，并搭配next主题让博客更加美观。 前前后后也用了两个晚上的时间，上网查了许多资料，并踩了不少的坑，终于在今天搭建好了自己的博客。由于网上的资料有许多都已经过时，而且也没有一个完整的详细的入门教程，所以特记录下我搭建的整个过程，希望大家能参考。">
@@ -414,7 +415,7 @@
 <h1 id="GitHub-Pages"><a href="#GitHub-Pages" class="headerlink" title="GitHub Pages"></a>GitHub Pages</h1><p>Github Pages 是面向用户、组织和项目开放的公共静态页面搭建托管服务，站点可以免费托管在Github上，你可选择试用Github Pages默认提供的域名github.io或者自定义域名来发布站点。</p>
 <p>更具体的介绍可以查看<a href="https://help.github.com/articles/what-is-github-pages/" target="_blank" rel="external">官方说明</a>。</p>
 <p>实际上，github pages的使用在<a href="https://pages.github.com/" target="_blank" rel="external">GitHub Pages官方页面</a>有着详细的介绍，下面是我的实际操作过程。</p>
-<h3 id="GitHub账号注册"><a href="#GitHub账号注册" class="headerlink" title="GitHub账号注册"></a>GitHub账号注册</h3><p>登录<a href="https://github.com/" target="_blank" rel="external">Github官网</a>，可能会需要科学上网。</p>
+<h2 id="GitHub账号注册"><a href="#GitHub账号注册" class="headerlink" title="GitHub账号注册"></a>GitHub账号注册</h2><p>登录<a href="https://github.com/" target="_blank" rel="external">Github官网</a>，可能会需要科学上网。</p>
 <p><img src="/uploads/github.png" alt=""></p>
 <p>接着点击Sign up for GitHub,会进入注册页面。</p>
 <p><img src="/uploads/githubr.png" alt=""></p>
@@ -422,7 +423,7 @@
 <p><img src="/uploads/githubnew.png" alt=""></p>
 <p>注意，在 Repository name 中的内容必须为[你的github名字].github.io  例如，我的就是 yzmean.github.io 。接下来点击Create repository。 会进入形如以下的页面：</p>
 <p><img src="/uploads/repo.png" alt=""></p>
-<h3 id="配置SSH-keys"><a href="#配置SSH-keys" class="headerlink" title="配置SSH keys"></a>配置SSH keys</h3><p>打开mac终端，输入命令</p>
+<h2 id="配置SSH-keys"><a href="#配置SSH-keys" class="headerlink" title="配置SSH keys"></a>配置SSH keys</h2><p>打开mac终端，输入命令</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cd ~/.ssh  #检查本机的ssh密钥</div></pre></td></tr></table></figure>
 <p>如果提示 No such file or directory 说明你是第一次使用 git。</p>
 <p>接下来生成新的SSH key：</p>
@@ -444,9 +445,89 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">The authenticity of host 'GitHub.com (207.97.227.239)' can't be established.</div><div class="line">RSA key fingerprint is <span class="number">16</span>:<span class="number">27</span>:ac:a5:<span class="number">76</span>:<span class="number">28</span>:<span class="number">2</span>d:<span class="number">36</span>:<span class="number">63</span>:<span class="number">1b</span>:<span class="number">56</span>:<span class="number">4</span>d:eb:df:a6:<span class="number">48.</span></div><div class="line">Are you sure you want to continue connecting (yes/no)?&lt;输入yes&gt;</div><div class="line">Hi 你的用户名! You've successfully authenticated, but GitHub does <span class="keyword">not</span> provide shell access.</div></pre></td></tr></table></figure>
 <p>若出现以上提示，则说明添加SSH key成功。</p>
 <p>接下来测试github pages是否创建成功。输入以下命令：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">echo <span class="string">"# 你的用户名.github.io"</span> &gt;&gt; README.md</div><div class="line">git init</div><div class="line">git add README.md</div><div class="line">git commit -m <span class="string">"first commit"</span></div><div class="line">git remote add origin https:<span class="comment">//github.com/你的用户名/你的用户名.github.io.git</span></div><div class="line">git push -u origin master</div></pre></td></tr></table></figure>
-<p>未完待续</p>
-
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">echo <span class="string">"# 你的用户名.github.io"</span> &gt;&gt; README.md</div><div class="line">git init    </div><div class="line">git add README.md</div><div class="line">git commit -m <span class="string">"first commit"</span></div><div class="line">git remote add origin https:<span class="comment">//github.com/你的用户名/你的用户名.github.io.git</span></div><div class="line">git push -u origin master</div></pre></td></tr></table></figure>
+<p>之后在浏览器中输入 【你的名字】.github.io ，如果成功出现页面，并且页面上是你刚输入的地址，那么github pages配置成功。</p>
+<h1 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h1><h2 id="Hexo介绍"><a href="#Hexo介绍" class="headerlink" title="Hexo介绍"></a>Hexo介绍</h2><p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
+<h2 id="Hexo安装"><a href="#Hexo安装" class="headerlink" title="Hexo安装"></a>Hexo安装</h2><p>首先，你必须在电脑中安装<a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js</a></p>
+<h3 id="Node-js-安装"><a href="#Node-js-安装" class="headerlink" title="Node.js 安装"></a>Node.js 安装</h3><ol>
+<li>通过homebrew安装（mac推荐）</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew -v #检查是否安装homebrew#</div></pre></td></tr></table></figure>
+<p>如果顺利显示版本号，说明homebrew已经安装。</p>
+<p>否则，输入以下命令进行安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</div></pre></td></tr></table></figure></p>
+<p>等待一段时间后，可使用 brew -v 再次检查是否安装成功。</p>
+<p>接下来，输入命令安装Node.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">brew link node</div><div class="line">brew uninstall node</div><div class="line">brew install node</div></pre></td></tr></table></figure>
+<ol>
+<li><a href="https://nodejs.org/en/" target="_blank" rel="external">官网</a>下载pkg安装包，但需要额外安装npm。具体可参考<a href="http://www.jianshu.com/p/3b30c4c846d1" target="_blank" rel="external">链接</a>。</li>
+</ol>
+<h3 id="Hexo-开始安装"><a href="#Hexo-开始安装" class="headerlink" title="Hexo 开始安装"></a>Hexo 开始安装</h3><p>接下来使用npm完成hexo 安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g hexo-cli</div></pre></td></tr></table></figure>
+<p>若mac用户出现编译问题可参考<a href="https://hexo.io/zh-cn/docs/#安装" target="_blank" rel="external">Hexo官网</a>的解决方法。</p>
+<h2 id="Hexo-建站"><a href="#Hexo-建站" class="headerlink" title="Hexo 建站"></a>Hexo 建站</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ hexo init &lt;folder&gt; #我的是blog#</div><div class="line">$ cd &lt;folder&gt;</div><div class="line">$ npm install</div></pre></td></tr></table></figure>
+<p>新建完成后，指定文件夹的目录如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── _config.yml</div><div class="line">├── package.json</div><div class="line">├── scaffolds</div><div class="line">├── source</div><div class="line">|   ├── _drafts</div><div class="line">|   └── _posts</div><div class="line">└── themes</div></pre></td></tr></table></figure></p>
+<p>简单介绍一下比较重要的文件</p>
+<ul>
+<li>_config.yml<br>网站的配置文件，可以在此配置大部分参数</li>
+<li>source<br>资源文件夹是存放用户资源的地方。除 <em>posts 文件夹之外，开头命名为 </em> (下划线)的文件 / 文件夹和隐藏的文件将会被忽略。Markdown 和 HTML 文件会被解析并放到 public 文件夹，而其他文件会被拷贝过去。</li>
+<li>themes<br>主题文件夹，后面我们使用的next主题即会存放在此。</li>
+<li>_posts<br>存储你发表在博客上的文章，当Hexo 初始化一个站点时，里面会有一篇默认的博文。</li>
+</ul>
+<h2 id="Hexo-配置"><a href="#Hexo-配置" class="headerlink" title="Hexo 配置"></a>Hexo 配置</h2><p>Hexo配置主要在_config.yml文件中，下面是一些简单的配置，更具体详细的配置可以查看<a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="external">Hexo官方文档</a>.</p>
+<table>
+<thead>
+<tr>
+<th>paramate</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>title</td>
+<td>网站标题     </td>
+</tr>
+<tr>
+<td>subtitle</td>
+<td>网站副标题</td>
+</tr>
+<tr>
+<td>description</td>
+<td>网站描述</td>
+</tr>
+<tr>
+<td>author</td>
+<td>您的名字</td>
+</tr>
+<tr>
+<td>language</td>
+<td>网站使用的语言</td>
+</tr>
+<tr>
+<td>timezone</td>
+<td>网站时区。Hexo 默认使用您电脑的时区。时区列表。比如说：America/New_York, Japan, 和 UTC 。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Hexo-测试"><a href="#Hexo-测试" class="headerlink" title="Hexo 测试"></a>Hexo 测试</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd &lt;your folder&gt;</div><div class="line">hexo s</div></pre></td></tr></table></figure>
+<p>如果出现以下提示则成功：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">INFO  Start processing</div><div class="line">INFO  Hexo is running at http://localhost:4000/. Press Ctrl+C to stop.</div></pre></td></tr></table></figure></p>
+<p>现在，进入<a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a> 看看你的个人站点吧。</p>
+<p>效果如下：</p>
+<p><img src="https://raw.githubusercontent.com/jeasonstudio/images/8b550fd8d102bf7625f47511b35489612626636d/20160526/hexo4000.png" alt=""></p>
+<p>但是，此时你只能在本地浏览，所以现在我们要将 这个网站部署到服务器上。而借助Github Pages正是通过GitHub的服务器进行部署。</p>
+<h2 id="Hexo-部署到-Git-上"><a href="#Hexo-部署到-Git-上" class="headerlink" title="Hexo 部署到 Git 上"></a>Hexo 部署到 Git 上</h2><p>安装 hexo-deployer-git</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-deployer-git --save</div></pre></td></tr></table></figure>
+<p>修改 _config.yml 文件中的配置如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: &lt;repository url&gt; #你的 【你的名字】.github.io  这一项目的git地址#</div><div class="line">  branch: master</div><div class="line">  message: [message] #可不填写#</div></pre></td></tr></table></figure>
+<ul>
+<li>注意：在配置所有的_config.yml文件时（包括theme中的），在所有的冒号:后边都要加一个空格，否则执行hexo命令会报错<br><repository url=""> 可以在你项目的主页上 Clone or download 复制web URL 。（以.git结尾）</repository></li>
+</ul>
+<p>接下来执行以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hexo clean</div><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure></p>
+<p>若出现错误，请执行如下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-developer-git --save</div></pre></td></tr></table></figure>
+<p>然后重复上述三条指令。</p>
+<p>现在，登录到你的github pages 上查看你的博客吧。直接在浏览器命令行键入 <a href="http://yzmean.github.io" target="_blank" rel="external">http://yzmean.github.io</a> (其中，将yzmean换成你的用户名)。</p>
+<p>此时，应该可以看到和你在本地上看到的一样的画面了。</p>
+<h2 id="绑定个人域名（可选）"><a href="#绑定个人域名（可选）" class="headerlink" title="绑定个人域名（可选）"></a>绑定个人域名（可选）</h2>
       
     </div>
     
@@ -669,7 +750,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GitHub-Pages"><span class="nav-number">1.</span> <span class="nav-text">GitHub Pages</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GitHub账号注册"><span class="nav-number">1.0.1.</span> <span class="nav-text">GitHub账号注册</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置SSH-keys"><span class="nav-number">1.0.2.</span> <span class="nav-text">配置SSH keys</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GitHub-Pages"><span class="nav-number">1.</span> <span class="nav-text">GitHub Pages</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GitHub账号注册"><span class="nav-number">1.1.</span> <span class="nav-text">GitHub账号注册</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置SSH-keys"><span class="nav-number">1.2.</span> <span class="nav-text">配置SSH keys</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hexo"><span class="nav-number">2.</span> <span class="nav-text">Hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo介绍"><span class="nav-number">2.1.</span> <span class="nav-text">Hexo介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo安装"><span class="nav-number">2.2.</span> <span class="nav-text">Hexo安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-js-安装"><span class="nav-number">2.2.1.</span> <span class="nav-text">Node.js 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo-开始安装"><span class="nav-number">2.2.2.</span> <span class="nav-text">Hexo 开始安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-建站"><span class="nav-number">2.3.</span> <span class="nav-text">Hexo 建站</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-配置"><span class="nav-number">2.4.</span> <span class="nav-text">Hexo 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-测试"><span class="nav-number">2.5.</span> <span class="nav-text">Hexo 测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-部署到-Git-上"><span class="nav-number">2.6.</span> <span class="nav-text">Hexo 部署到 Git 上</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绑定个人域名（可选）"><span class="nav-number">2.7.</span> <span class="nav-text">绑定个人域名（可选）</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -701,7 +782,7 @@
 <br/>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共889字</span>
+  <span class="post-count">博客全站共1.8k字</span>
 </div>
         
 
