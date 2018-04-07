@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="Yuan Zi&#39;s Blog">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://wx4.sinaimg.cn/large/006kIAZaly1fq30eco3hgj30f8058js8.jpg">
-<meta property="og:updated_time" content="2018-04-06T08:29:08.104Z">
+<meta property="og:updated_time" content="2018-04-07T07:14:23.510Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS 6.9 下GreenPlum源码编译安装教程">
 <meta name="twitter:image" content="http://wx4.sinaimg.cn/large/006kIAZaly1fq30eco3hgj30f8058js8.jpg">
@@ -410,9 +410,15 @@
 
       
         <p><img src="http://wx4.sinaimg.cn/large/006kIAZaly1fq30eco3hgj30f8058js8.jpg" alt=""><br><a id="more"></a></p>
-<h1 id="GreenPlum介绍"><a href="#GreenPlum介绍" class="headerlink" title="GreenPlum介绍"></a>GreenPlum介绍</h1><h2 id="PostgreSql"><a href="#PostgreSql" class="headerlink" title="PostgreSql"></a>PostgreSql</h2><p>PostgreSQL is an advanced object-relational database management system<br>that supports an extended subset of the SQL standard, including<br>transactions, foreign keys, subqueries, triggers, user-defined types<br>and functions.  This distribution also contains C language bindings.</p>
+<h1 id="GreenPlum介绍"><a href="#GreenPlum介绍" class="headerlink" title="GreenPlum介绍"></a>GreenPlum介绍</h1><h2 id="PostgreSql"><a href="#PostgreSql" class="headerlink" title="PostgreSql"></a>PostgreSql</h2><p>PostgreSQL is an advanced object-relational database management system that supports an extended subset of the SQL standard, including transactions, foreign keys, subqueries, triggers, user-defined types and functions.  This distribution also contains C language bindings.</p>
 <h2 id="GreenPlum"><a href="#GreenPlum" class="headerlink" title="GreenPlum"></a>GreenPlum</h2><p>The Greenplum Database (GPDB) is an advanced, fully featured, open source data warehouse. It provides powerful and rapid analytics on petabyte scale data volumes. Uniquely geared toward big data analytics, Greenplum Database is powered by the world’s most advanced cost-based query optimizer delivering high analytical query performance on large data volumes.<br>Greenplum 是基于 PostgreSQL 开发的，语法与 PostgreSQL 几乎一样。<br>本质上，Greenplum 是一个关系型数据库集群，由多个独立的数据库服务组 合成的逻辑数据库，对于用户来说 Greenplum 与 Oracle、PostgreSQL 并无不同， 都可以通过标准 SQL 语句对数据进行访问。</p>
-
+<h1 id="GreenPlum源码编译安装"><a href="#GreenPlum源码编译安装" class="headerlink" title="GreenPlum源码编译安装"></a>GreenPlum源码编译安装</h1><p>以CentOS 6.9为例，下载地址为<a href="http://mirrors.aliyun.com/centos/6.9/isos/x86_64/" target="_blank" rel="external">阿里云镜像</a>。<br>CentOS-6.9-x86_64-bin-DVD1.iso<br>CentOS-6.9-x86_64-bin-DVD2.iso </p>
+<p>强烈建议以gpadmin为用户名。</p>
+<h2 id="添加用户root权限"><a href="#添加用户root权限" class="headerlink" title="添加用户root权限"></a>添加用户root权限</h2><p>vim 打开 /etc/sudoers 文件 （以root权限打开）<br>找到以下两行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">## Allow root to run any commands anywhere</div><div class="line">root    ALL=(ALL)       ALL</div></pre></td></tr></table></figure></p>
+<p>并在下一行添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gpadmin ALL=(ALL)       ALL #注意对齐</div></pre></td></tr></table></figure></p>
+<p>保存并返回即可</p>
+<h2 id="安装gcc-c"><a href="#安装gcc-c" class="headerlink" title="安装gcc-c++"></a>安装gcc-c++</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum install gcc-c++</div></pre></td></tr></table></figure>
+<h2 id="安装cmake"><a href="#安装cmake" class="headerlink" title="安装cmake"></a>安装cmake</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">cd /home/gpadmin</div><div class="line">wget https://cmake.org/files/v3.5/cmake-3.5.2.tar.gz</div><div class="line">tar -zxvf cmake-3.5.2.tar.gz</div><div class="line">cd cmake-3.5.2</div><div class="line">./configure --prefix=/usr/local</div><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
       
     </div>
     
@@ -673,7 +679,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GreenPlum介绍"><span class="nav-number">1.</span> <span class="nav-text">GreenPlum介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PostgreSql"><span class="nav-number">1.1.</span> <span class="nav-text">PostgreSql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GreenPlum"><span class="nav-number">1.2.</span> <span class="nav-text">GreenPlum</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GreenPlum介绍"><span class="nav-number">1.</span> <span class="nav-text">GreenPlum介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PostgreSql"><span class="nav-number">1.1.</span> <span class="nav-text">PostgreSql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GreenPlum"><span class="nav-number">1.2.</span> <span class="nav-text">GreenPlum</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GreenPlum源码编译安装"><span class="nav-number">2.</span> <span class="nav-text">GreenPlum源码编译安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加用户root权限"><span class="nav-number">2.1.</span> <span class="nav-text">添加用户root权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装gcc-c"><span class="nav-number">2.2.</span> <span class="nav-text">安装gcc-c++</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装cmake"><span class="nav-number">2.3.</span> <span class="nav-text">安装cmake</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -705,7 +711,7 @@
 <br/>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共3.2k字</span>
+  <span class="post-count">博客全站共3.4k字</span>
 </div>
         
 
