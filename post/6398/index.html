@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="Yuan Zi&#39;s Blog">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://wx4.sinaimg.cn/large/006kIAZaly1fq30eco3hgj30f8058js8.jpg">
-<meta property="og:updated_time" content="2018-04-07T07:18:48.873Z">
+<meta property="og:updated_time" content="2018-04-07T07:47:58.785Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS 6.9 下GreenPlum源码编译安装教程">
 <meta name="twitter:image" content="http://wx4.sinaimg.cn/large/006kIAZaly1fq30eco3hgj30f8058js8.jpg">
@@ -415,11 +415,24 @@
 <h1 id="GreenPlum源码编译安装"><a href="#GreenPlum源码编译安装" class="headerlink" title="GreenPlum源码编译安装"></a>GreenPlum源码编译安装</h1><p>以CentOS 6.9为例，下载地址为<a href="http://mirrors.aliyun.com/centos/6.9/isos/x86_64/" target="_blank" rel="external">阿里云镜像</a>。</p>
 <p>CentOS-6.9-x86_64-bin-DVD1.iso<br>CentOS-6.9-x86_64-bin-DVD2.iso </p>
 <p>强烈建议以gpadmin为用户名。</p>
-<h2 id="添加用户root权限"><a href="#添加用户root权限" class="headerlink" title="添加用户root权限"></a>添加用户root权限</h2><p>vim 打开 /etc/sudoers 文件 （以root权限打开）<br>找到以下两行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">## Allow root to run any commands anywhere</div><div class="line">root    ALL=(ALL)       ALL</div></pre></td></tr></table></figure></p>
+<p>##准备工作</p>
+<h3 id="添加用户root权限"><a href="#添加用户root权限" class="headerlink" title="添加用户root权限"></a>添加用户root权限</h3><p>vim 打开 /etc/sudoers 文件 （以root权限打开）<br>找到以下两行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">## Allow root to run any commands anywhere</div><div class="line">root    ALL=(ALL)       ALL</div></pre></td></tr></table></figure></p>
 <p>并在下一行添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gpadmin ALL=(ALL)       ALL #注意对齐</div></pre></td></tr></table></figure></p>
 <p>保存并返回即可</p>
-<h2 id="安装gcc-c"><a href="#安装gcc-c" class="headerlink" title="安装gcc-c++"></a>安装gcc-c++</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum install gcc-c++</div></pre></td></tr></table></figure>
-<h2 id="安装cmake"><a href="#安装cmake" class="headerlink" title="安装cmake"></a>安装cmake</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">cd /home/gpadmin</div><div class="line">wget https://cmake.org/files/v3.5/cmake-3.5.2.tar.gz</div><div class="line">tar -zxvf cmake-3.5.2.tar.gz</div><div class="line">cd cmake-3.5.2</div><div class="line">./configure --prefix=/usr/local</div><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
+<h3 id="安装gcc-c"><a href="#安装gcc-c" class="headerlink" title="安装gcc-c++"></a>安装gcc-c++</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum install gcc-c++</div></pre></td></tr></table></figure>
+<h3 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum install git</div></pre></td></tr></table></figure>
+<h3 id="安装cmake"><a href="#安装cmake" class="headerlink" title="安装cmake"></a>安装cmake</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">cd /home/gpadmin</div><div class="line">wget https://cmake.org/files/v3.5/cmake-3.5.2.tar.gz</div><div class="line">tar -zxvf cmake-3.5.2.tar.gz</div><div class="line">cd cmake-3.5.2</div><div class="line">./configure --prefix=/usr/local</div><div class="line">make</div><div class="line">sudo make install</div></pre></td></tr></table></figure>
+<h3 id="安装pip"><a href="#安装pip" class="headerlink" title="安装pip"></a>安装pip</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo yum -y install epel-release</div><div class="line">sudo yum -y install python-pip</div><div class="line">pip install --upgrade #pip版本至少为 7.x.x</div></pre></td></tr></table></figure>
+<h3 id="确保已安装必需的python模块"><a href="#确保已安装必需的python模块" class="headerlink" title="确保已安装必需的python模块"></a>确保已安装必需的python模块</h3><ul>
+<li>psutil</li>
+<li>lockfile (&gt;= 0.9.1)</li>
+<li>paramiko</li>
+<li>setuptools</li>
+</ul>
+<h3 id="确保动态链接库共享"><a href="#确保动态链接库共享" class="headerlink" title="确保动态链接库共享"></a>确保动态链接库共享</h3><p>添加 /usr/local/lib  和 /usr/local/lib64 到 /etc/ld.so.conf 中<br>并运行命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo ldconfig</div></pre></td></tr></table></figure></p>
+<h2 id="安装GPORCA"><a href="#安装GPORCA" class="headerlink" title="安装GPORCA"></a>安装GPORCA</h2><h3 id="clone-GPORCA"><a href="#clone-GPORCA" class="headerlink" title="clone GPORCA"></a>clone GPORCA</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /home/gpadmin</div><div class="line">git clone https://github.com/greenplum-db/gporca.git</div></pre></td></tr></table></figure>
+<h3 id="安装-gp-xerces"><a href="#安装-gp-xerces" class="headerlink" title="安装 gp-xerces"></a>安装 gp-xerces</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/greenplum-db/gp-xerces.git</div><div class="line">cd gp-xerces</div><div class="line">mkdir build</div><div class="line">cd build</div><div class="line">../configure --prefix=/usr/local</div><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -680,7 +693,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GreenPlum介绍"><span class="nav-number">1.</span> <span class="nav-text">GreenPlum介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PostgreSql"><span class="nav-number">1.1.</span> <span class="nav-text">PostgreSql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GreenPlum"><span class="nav-number">1.2.</span> <span class="nav-text">GreenPlum</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GreenPlum源码编译安装"><span class="nav-number">2.</span> <span class="nav-text">GreenPlum源码编译安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加用户root权限"><span class="nav-number">2.1.</span> <span class="nav-text">添加用户root权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装gcc-c"><span class="nav-number">2.2.</span> <span class="nav-text">安装gcc-c++</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装cmake"><span class="nav-number">2.3.</span> <span class="nav-text">安装cmake</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GreenPlum介绍"><span class="nav-number">1.</span> <span class="nav-text">GreenPlum介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PostgreSql"><span class="nav-number">1.1.</span> <span class="nav-text">PostgreSql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GreenPlum"><span class="nav-number">1.2.</span> <span class="nav-text">GreenPlum</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GreenPlum源码编译安装"><span class="nav-number">2.</span> <span class="nav-text">GreenPlum源码编译安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加用户root权限"><span class="nav-number">2.0.1.</span> <span class="nav-text">添加用户root权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装gcc-c"><span class="nav-number">2.0.2.</span> <span class="nav-text">安装gcc-c++</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装git"><span class="nav-number">2.0.3.</span> <span class="nav-text">安装git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装cmake"><span class="nav-number">2.0.4.</span> <span class="nav-text">安装cmake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装pip"><span class="nav-number">2.0.5.</span> <span class="nav-text">安装pip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确保已安装必需的python模块"><span class="nav-number">2.0.6.</span> <span class="nav-text">确保已安装必需的python模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确保动态链接库共享"><span class="nav-number">2.0.7.</span> <span class="nav-text">确保动态链接库共享</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装GPORCA"><span class="nav-number">2.1.</span> <span class="nav-text">安装GPORCA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#clone-GPORCA"><span class="nav-number">2.1.1.</span> <span class="nav-text">clone GPORCA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-gp-xerces"><span class="nav-number">2.1.2.</span> <span class="nav-text">安装 gp-xerces</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -712,7 +725,7 @@
 <br/>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共3.4k字</span>
+  <span class="post-count">博客全站共3.5k字</span>
 </div>
         
 
