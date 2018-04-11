@@ -4,19 +4,43 @@
 
     
   <url>
-    <loc>http://www.yzmean.site/post/6398/</loc>
-    <lastmod>2018-04-07T09:40:50.156Z</lastmod>
+    <loc>http://www.yzmean.site/post/23968/</loc>
+    <lastmod>2018-04-11T08:15:28.629Z</lastmod>
     <data>
         <display>
-        <title>CentOS 6.9 下GreenPlum源码编译安装教程</title>
-        <pubTime>2018-04-06T08:00:19.627Z</pubTime>
+        <title>macOS High Sierra下无法使用gdb的解决办法</title>
+        <pubTime>2018-04-11T07:36:21.062Z</pubTime>
+        
+        <tag>Postgresql</tag>
+         
+        <tag>gdb</tag>
+         
+        <tag>solutions</tag>
+         
+         
+           
+             
+              <breadCrumb title="Solutions" url="http://www.yzmean.site/categories/Solutions/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.yzmean.site/post/6398/</loc>
+    <lastmod>2018-04-09T02:40:11.527Z</lastmod>
+    <data>
+        <display>
+        <title>CentOS 6.9 ��GreenPlumԴ����밲װ������̳�</title>
+        <pubTime>2018-04-09T02:40:11.526Z</pubTime>
         
         <tag>-Greenplum</tag>
          
          
            
              
-              <breadCrumb title="GreenPlum学习" url="http://www.yzmean.site/categories/GreenPlum%E5%AD%A6%E4%B9%A0/"/>
+              <breadCrumb title="GreenPlumѧϰ" url="http://www.yzmean.site/categories/GreenPlum%D1%A7%CF%B0/"/>
           
         </display>
     </data>
