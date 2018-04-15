@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="-Greenplum," />
 
 
 
@@ -86,16 +86,18 @@
 
 
 
-<meta name="description" content="I ain&apos;t gonna be just a face in the crowd .">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Yuan Zi&#39;s Blog">
-<meta property="og:url" content="http://www.yzmean.site/tags/Next主题/index.html">
+<meta name="description" content="分布式数据库结构分布式数据库主要特征为将数据分成多份放在多个数据节点，通过并行的SQL操作提高性能。其中根据不同的节点之间对于内存磁盘资源的共享情况分为三类：  共享内存(shared-memory)  系统中所有内存和磁盘都是有多个处理器共享。 共享磁盘(shared-disk)  每个处理器有自己私有内存，但每个处理器都可以直接读写全部的磁盘存储。即处理器之间虽不能互相交互，但可通过高速网络与">
+<meta name="keywords" content="-Greenplum">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Greenplum笔记(一)-体系结构">
+<meta property="og:url" content="http://www.yzmean.site/post/59302/index.html">
 <meta property="og:site_name" content="Yuan Zi&#39;s Blog">
-<meta property="og:description" content="I ain&apos;t gonna be just a face in the crowd .">
+<meta property="og:description" content="分布式数据库结构分布式数据库主要特征为将数据分成多份放在多个数据节点，通过并行的SQL操作提高性能。其中根据不同的节点之间对于内存磁盘资源的共享情况分为三类：  共享内存(shared-memory)  系统中所有内存和磁盘都是有多个处理器共享。 共享磁盘(shared-disk)  每个处理器有自己私有内存，但每个处理器都可以直接读写全部的磁盘存储。即处理器之间虽不能互相交互，但可通过高速网络与">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-15T17:46:55.388Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Yuan Zi&#39;s Blog">
-<meta name="twitter:description" content="I ain&apos;t gonna be just a face in the crowd .">
+<meta name="twitter:title" content="Greenplum笔记(一)-体系结构">
+<meta name="twitter:description" content="分布式数据库结构分布式数据库主要特征为将数据分成多份放在多个数据节点，通过并行的SQL操作提高性能。其中根据不同的节点之间对于内存磁盘资源的共享情况分为三类：  共享内存(shared-memory)  系统中所有内存和磁盘都是有多个处理器共享。 共享磁盘(shared-disk)  每个处理器有自己私有内存，但每个处理器都可以直接读写全部的磁盘存储。即处理器之间虽不能互相交互，但可通过高速网络与">
 
 
 
@@ -125,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://www.yzmean.site/tags/Next主题/"/>
+  <link rel="canonical" href="http://www.yzmean.site/post/59302/"/>
 
 
 
 
 
-  <title>标签: Next主题 | Yuan Zi's Blog</title>
+  <title>Greenplum笔记(一)-体系结构 | Yuan Zi's Blog</title>
   
 
 
@@ -169,7 +171,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
     
 
@@ -294,54 +296,232 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Next主题<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.yzmean.site/post/59302/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yuan Zi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yuan Zi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/post/63734/" itemprop="url">
-              
-                <span itemprop="name">mac环境下搭建hexo+github pages+next个人博客</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Greenplum笔记(一)-体系结构</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-10-09T02:51:13+08:00"
-              content="2017-10-09" >
-          10-09
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T01:31:35+08:00">
+                2018-04-16
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/GreenPlum学习/" itemprop="url" rel="index">
+                    <span itemprop="name">GreenPlum学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/post/59302/" class="leancloud_visitors" data-flag-title="Greenplum笔记(一)-体系结构">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="分布式数据库结构"><a href="#分布式数据库结构" class="headerlink" title="分布式数据库结构"></a>分布式数据库结构</h1><p>分布式数据库主要特征为将数据分成多份放在多个数据节点，通过并行的SQL操作提高性能。<br>其中根据不同的节点之间对于内存磁盘资源的共享情况分为三类：</p>
+<ul>
+<li>共享内存(shared-memory)<br>  系统中所有内存和磁盘都是有多个处理器共享。</li>
+<li>共享磁盘(shared-disk)<br>  每个处理器有自己私有内存，但每个处理器都可以直接读写全部的磁盘存储。即处理器之间虽不能互相交互，但可通过高速网络与磁盘相连。</li>
+<li>不共享(shared-nothing)<br>  每个处理器相对独立，有自己的内存和存储，无法互相访问彼此内存和磁盘。</li>
+</ul>
+<p>Greenplum采用shared-nothing架构，每个节点都是一个独立的小型数据库，多个节点一起构成整个分布式并行数据库系统。</p>
 
       
     </div>
+    
+    
+    
 
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/wechat.png" alt="Yuan Zi 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Greenplum/" rel="tag"># -Greenplum</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/6398/" rel="next" title="CentOS 6.9下GreenPlum源码编译安装及部署教程">
+                <i class="fa fa-chevron-left"></i> CentOS 6.9下GreenPlum源码编译安装及部署教程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+                <!--MOB SHARE BEGIN-->
+<div class="-mob-share-ui-button -mob-share-open">分享</div>
+<div class="-mob-share-ui" style="display: none">
+    <ul class="-mob-share-list">
+        <li class="-mob-share-weibo"><p>新浪微博</p></li>
+        <li class="-mob-share-tencentweibo"><p>腾讯微博</p></li>
+        <li class="-mob-share-qzone"><p>QQ空间</p></li>
+        <li class="-mob-share-qq"><p>QQ好友</p></li>
+        <li class="-mob-share-renren"><p>人人网</p></li>
+        <li class="-mob-share-kaixin"><p>开心网</p></li>
+        <li class="-mob-share-douban"><p>豆瓣</p></li>
+        <li class="-mob-share-facebook"><p>Facebook</p></li>
+        <li class="-mob-share-twitter"><p>Twitter</p></li>
+    </ul>
+    <div class="-mob-share-close">取消</div>
+</div>
+<div class="-mob-share-ui-bg"></div>
+<script id="-mob-share" src="http://f1.webshare.mob.com/code/mob-share.js?appkey=2188e1e9decc4"></script>
+<!--MOB SHARE END-->
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -349,6 +529,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTI1Ni83ODA1"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -369,8 +558,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -470,6 +668,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式数据库结构"><span class="nav-number">1.</span> <span class="nav-text">分布式数据库结构</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -589,6 +803,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
@@ -617,6 +835,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
