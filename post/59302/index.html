@@ -86,18 +86,18 @@
 
 
 
-<meta name="description" content="分布式数据库结构分布式数据库主要特征为将数据分成多份放在多个数据节点，通过并行的SQL操作提高性能。其中根据不同的节点之间对于内存磁盘资源的共享情况分为三类：  共享内存(shared-memory)  系统中所有内存和磁盘都是有多个处理器共享。 共享磁盘(shared-disk)  每个处理器有自己私有内存，但每个处理器都可以直接读写全部的磁盘存储。即处理器之间虽不能互相交互，但可通过高速网络与">
 <meta name="keywords" content="-Greenplum">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Greenplum笔记(一)-体系结构">
 <meta property="og:url" content="http://www.yzmean.site/post/59302/index.html">
 <meta property="og:site_name" content="Yuan Zi&#39;s Blog">
-<meta property="og:description" content="分布式数据库结构分布式数据库主要特征为将数据分成多份放在多个数据节点，通过并行的SQL操作提高性能。其中根据不同的节点之间对于内存磁盘资源的共享情况分为三类：  共享内存(shared-memory)  系统中所有内存和磁盘都是有多个处理器共享。 共享磁盘(shared-disk)  每个处理器有自己私有内存，但每个处理器都可以直接读写全部的磁盘存储。即处理器之间虽不能互相交互，但可通过高速网络与">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-15T17:55:43.098Z">
+<meta property="og:image" content="http://wx3.sinaimg.cn/large/006kIAZaly1fqef2hszidj30py0czwnr.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/large/006kIAZaly1fqef2hszidj30py0czwnr.jpg">
+<meta property="og:updated_time" content="2018-04-16T05:21:54.437Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Greenplum笔记(一)-体系结构">
-<meta name="twitter:description" content="分布式数据库结构分布式数据库主要特征为将数据分成多份放在多个数据节点，通过并行的SQL操作提高性能。其中根据不同的节点之间对于内存磁盘资源的共享情况分为三类：  共享内存(shared-memory)  系统中所有内存和磁盘都是有多个处理器共享。 共享磁盘(shared-disk)  每个处理器有自己私有内存，但每个处理器都可以直接读写全部的磁盘存储。即处理器之间虽不能互相交互，但可通过高速网络与">
+<meta name="twitter:image" content="http://wx3.sinaimg.cn/large/006kIAZaly1fqef2hszidj30py0czwnr.jpg">
 
 
 
@@ -410,13 +410,33 @@
       
 
       
-        <h1 id="分布式数据库结构"><a href="#分布式数据库结构" class="headerlink" title="分布式数据库结构"></a>分布式数据库结构</h1><p>分布式数据库主要特征为将数据分成多份放在多个数据节点，通过并行的SQL操作提高性能。<br>其中根据不同的节点之间对于内存磁盘资源的共享情况分为三类：</p>
+        <p><img src="http://wx3.sinaimg.cn/large/006kIAZaly1fqef2hszidj30py0czwnr.jpg" alt=""><br><a id="more"></a></p>
+<h1 id="分布式数据库架构"><a href="#分布式数据库架构" class="headerlink" title="分布式数据库架构"></a>分布式数据库架构</h1><h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>分布式数据库主要特征为将数据分成多份放在多个数据节点，通过并行的SQL操作提高性能。<br>其中根据不同的节点之间对于内存磁盘资源的共享情况分为三类：</p>
 <ul>
 <li>共享内存(shared-memory)<br>  系统中所有内存和磁盘都是有多个处理器共享。</li>
 <li>共享磁盘(shared-disk)<br>  每个处理器有自己私有内存，但每个处理器都可以直接读写全部的磁盘存储。即处理器之间虽不能互相交互，但可通过高速网络与磁盘相连。</li>
 <li>不共享(shared-nothing)<br>  每个处理器相对独立，有自己的内存和存储，无法互相访问彼此内存和磁盘。</li>
 </ul>
-<p>Greenplum采用shared-nothing架构，每个节点都是一个独立的小型数据库，多个节点一起构成整个分布式并行数据库系统。</p>
+<p>还有其他的命名方式但总体概念相差不大<br><img src="http://wx3.sinaimg.cn/large/006kIAZaly1fqef2hszidj30py0czwnr.jpg" alt=""></p>
+<h2 id="greenplum的架构"><a href="#greenplum的架构" class="headerlink" title="greenplum的架构"></a>greenplum的架构</h2><p>Greenplum采用shared-nothing架构，每个节点都是一个独立的小型数据库，多个节点一起构成整个分布式并行数据库系统。其架构主要由Master Host、Segment Host、 Interconnect组成，如首页图显示。</p>
+<p>下面列举出其特点：</p>
+<ul>
+<li>master host<br>  它接受客户端 的链接请求、负责权限认证、处理SQL命令、分发执行计划、汇总Segment的执行结果、返回结果给客户端。Greenplum Master 不存储业务数据只存储数据字典。</li>
+<li>segment host<br>  Segment Host 负责业务数据的存储和存取、用户查询sql的执行。</li>
+<li>interconnect<br>  Interconnect 是 Greenplum 数据库的网络层，在每个Segment中起到一个IPC的作用。通常使用万兆以太网交换机作为Interconnect。在默认情况下，使用UDP协议传输。</li>
+</ul>
+<p>一些名词解释：</p>
+<ul>
+<li>IPC<br>  进程间通信（IPC，Inter-Process Communication），指至少两个进程或线程间传送数据或信号的一些技术或方法。进程是计算机系统分配资源的最小单位(严格说来是线程)。每个进程都有自己的一部分独立的系统资源，彼此是隔离的。为了能使不同的进程互相访问资源并进行协调工作，才有了进程间通信。<br>  优点：<ul>
+<li>信息共享：Web服务器，通过网页浏览器使用进程间通信来共享web文件（网页等）和多媒体；</li>
+<li>加速：维基百科使用通过进程间通信进行交流的多服务器来满足用户的请求；</li>
+<li>模块化;</li>
+<li>私有权分离<br>缺点：</li>
+<li>采用了某种形式的内核开销，降低了性能;</li>
+<li>几乎大部分IPC都不是程序设计的自然扩展，往往会大大地增加程序的复杂度。</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
@@ -678,7 +698,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式数据库结构"><span class="nav-number">1.</span> <span class="nav-text">分布式数据库结构</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式数据库架构"><span class="nav-number">1.</span> <span class="nav-text">分布式数据库架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">1.1.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#greenplum的架构"><span class="nav-number">1.2.</span> <span class="nav-text">greenplum的架构</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -710,7 +730,7 @@
 <br/>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共4.6k字</span>
+  <span class="post-count">博客全站共5.1k字</span>
 </div>
         
 
