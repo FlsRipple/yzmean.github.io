@@ -96,7 +96,8 @@
 <meta property="og:image" content="http://wx3.sinaimg.cn/large/006kIAZaly1fqef2hszidj30py0czwnr.jpg">
 <meta property="og:image" content="http://wx1.sinaimg.cn/large/006kIAZaly1fqefusyt5aj31fo0p612b.jpg">
 <meta property="og:image" content="http://wx1.sinaimg.cn/large/006kIAZaly1fqeg1k43gaj318y0lyafm.jpg">
-<meta property="og:updated_time" content="2018-04-16T05:58:08.601Z">
+<meta property="og:image" content="http://wx2.sinaimg.cn/large/006kIAZaly1fqegprheq5j30qo0wcah4.jpg">
+<meta property="og:updated_time" content="2018-04-16T06:12:20.664Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Greenplum笔记(一)-体系结构">
 <meta name="twitter:image" content="http://wx4.sinaimg.cn/large/006kIAZaly1fqef2dbpm4j312u0taq63.jpg">
@@ -429,17 +430,19 @@
 </ul>
 <p>一些名词解释：</p>
 <ul>
-<li><p>IPC<br>  进程间通信（IPC，Inter-Process Communication），指至少两个进程或线程间传送数据或信号的一些技术或方法。进程是计算机系统分配资源的最小单位(严格说来是线程)。每个进程都有自己的一部分独立的系统资源，彼此是隔离的。为了能使不同的进程互相访问资源并进行协调工作，才有了进程间通信。</p>
-<p>  优点：</p>
-<ul>
+<li>IPC<br>  进程间通信（IPC，Inter-Process Communication），指至少两个进程或线程间传送数据或信号的一些技术或方法。进程是计算机系统分配资源的最小单位(严格说来是线程)。每个进程都有自己的一部分独立的系统资源，彼此是隔离的。为了能使不同的进程互相访问资源并进行协调工作，才有了进程间通信。<ul>
+<li>优点：<ul>
 <li>信息共享：Web服务器，通过网页浏览器使用进程间通信来共享web文件（网页等）和多媒体；</li>
 <li>加速：维基百科使用通过进程间通信进行交流的多服务器来满足用户的请求；</li>
 <li>模块化;</li>
-<li><p>私有权分离</p>
-<p>缺点：</p>
+<li>私有权分离</li>
+</ul>
 </li>
+<li>缺点：<ul>
 <li>采用了某种形式的内核开销，降低了性能;</li>
 <li>几乎大部分IPC都不是程序设计的自然扩展，往往会大大地增加程序的复杂度。</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>UDP<br>  用户数据报协议（英语：UserDatagramProtocol，缩写为UDP），又称用户数据报文协议，是一个简单的面向数据报的传输层协议</li>
@@ -460,16 +463,26 @@
 <h2 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h2><p>分布式数据库系统中的事务同集中式数据库系统中的事务一样， 也应该具有事务的ACID四个特性：</p>
 <ul>
 <li>A 原子性<ul>
-<li>分布式事务的原子性是指分布式事务执行时的不可分割性,保证了分布式数据库总是由一个一致状态转换到另一个一致状态</li>
+<li>指分布式事务执行时的不可分割性,保证了分布式数据库总是由一个一致状态转换到另一个一致状态</li>
 </ul>
 </li>
 <li>C 一致性<ul>
-<li>一致性是指分布式事务是使分布式数据库从一致状态转换为另一个一致状态的<strong>正确</strong>程序，如果分布式事务不能达到一个正确的结束状态那么就必须把分布式数据库恢复到该事务执行前的初始状态。</li>
+<li>指分布式事务是使分布式数据库从一致状态转换为另一个一致状态的<strong>正确</strong>程序，如果分布式事务不能达到一个正确的结束状态那么就必须把分布式数据库恢复到该事务执行前的初始状态。</li>
 </ul>
 </li>
-<li>I 隔离性</li>
-<li>D 耐久性</li>
+<li>I 隔离性<ul>
+<li>指一个正在执行的子事务在其提交之前,绝不允许将其对共享数据所作改变的结果提供给其它子事务使用,即子事务的执行不应受到其它并发 执行子事务的影响。</li>
 </ul>
+</li>
+<li>D 耐久性<ul>
+<li>指分布式事务中的全局事务和子事务提交，则无论系统发生何种故障，均不能丢失该事务的执行结果,保证了分布式数据库系统的可靠性</li>
+</ul>
+</li>
+</ul>
+<h3 id="2pc协议"><a href="#2pc协议" class="headerlink" title="2pc协议"></a>2pc协议</h3><p>2pc协议保证分布式事务提交时的原子性。</p>
+<p><img src="http://wx2.sinaimg.cn/large/006kIAZaly1fqegprheq5j30qo0wcah4.jpg" alt=""></p>
+<p>简单总结一下，就是协调者，参与者两种角色，一个协调者对应多个参与者。</p>
+<p>提交事务前，协调者会对所有参与站点即参与者询问是否prepare，只有所有参与者都回复yes，那么协调者会告知所有参与者可以提交，并且记录下commit；只要有一个参与者回复no，那么协调者告知所有参与者提交取消，并且记录下abort。</p>
 
       
     </div>
@@ -731,7 +744,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式数据库架构"><span class="nav-number">1.</span> <span class="nav-text">分布式数据库架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">1.1.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#greenplum的架构"><span class="nav-number">1.2.</span> <span class="nav-text">greenplum的架构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式数据库可靠性"><span class="nav-number">2.</span> <span class="nav-text">分布式数据库可靠性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#备份机制"><span class="nav-number">2.1.</span> <span class="nav-text">备份机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#备份策略"><span class="nav-number">2.2.</span> <span class="nav-text">备份策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#比较"><span class="nav-number">2.2.1.</span> <span class="nav-text">比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步"><span class="nav-number">2.3.</span> <span class="nav-text">同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式事务"><span class="nav-number">2.4.</span> <span class="nav-text">分布式事务</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式数据库架构"><span class="nav-number">1.</span> <span class="nav-text">分布式数据库架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">1.1.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#greenplum的架构"><span class="nav-number">1.2.</span> <span class="nav-text">greenplum的架构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式数据库可靠性"><span class="nav-number">2.</span> <span class="nav-text">分布式数据库可靠性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#备份机制"><span class="nav-number">2.1.</span> <span class="nav-text">备份机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#备份策略"><span class="nav-number">2.2.</span> <span class="nav-text">备份策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#比较"><span class="nav-number">2.2.1.</span> <span class="nav-text">比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步"><span class="nav-number">2.3.</span> <span class="nav-text">同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式事务"><span class="nav-number">2.4.</span> <span class="nav-text">分布式事务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2pc协议"><span class="nav-number">2.4.1.</span> <span class="nav-text">2pc协议</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -763,7 +776,7 @@
 <br/>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共5.7k字</span>
+  <span class="post-count">博客全站共6.0k字</span>
 </div>
         
 
