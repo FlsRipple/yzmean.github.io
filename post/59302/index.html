@@ -92,12 +92,12 @@
 <meta property="og:url" content="http://www.yzmean.site/post/59302/index.html">
 <meta property="og:site_name" content="Yuan Zi&#39;s Blog">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://wx4.sinaimg.cn/large/006kIAZaly1fqef2dbpm4j312u0taq63.jpg">
 <meta property="og:image" content="http://wx3.sinaimg.cn/large/006kIAZaly1fqef2hszidj30py0czwnr.jpg">
-<meta property="og:image" content="http://wx3.sinaimg.cn/large/006kIAZaly1fqef2hszidj30py0czwnr.jpg">
-<meta property="og:updated_time" content="2018-04-16T05:21:54.437Z">
+<meta property="og:updated_time" content="2018-04-16T05:27:41.194Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Greenplum笔记(一)-体系结构">
-<meta name="twitter:image" content="http://wx3.sinaimg.cn/large/006kIAZaly1fqef2hszidj30py0czwnr.jpg">
+<meta name="twitter:image" content="http://wx4.sinaimg.cn/large/006kIAZaly1fqef2dbpm4j312u0taq63.jpg">
 
 
 
@@ -410,7 +410,7 @@
       
 
       
-        <p><img src="http://wx3.sinaimg.cn/large/006kIAZaly1fqef2hszidj30py0czwnr.jpg" alt=""><br><a id="more"></a></p>
+        <p><img src="http://wx4.sinaimg.cn/large/006kIAZaly1fqef2dbpm4j312u0taq63.jpg" alt=""><br><a id="more"></a></p>
 <h1 id="分布式数据库架构"><a href="#分布式数据库架构" class="headerlink" title="分布式数据库架构"></a>分布式数据库架构</h1><h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>分布式数据库主要特征为将数据分成多份放在多个数据节点，通过并行的SQL操作提高性能。<br>其中根据不同的节点之间对于内存磁盘资源的共享情况分为三类：</p>
 <ul>
 <li>共享内存(shared-memory)<br>  系统中所有内存和磁盘都是有多个处理器共享。</li>
@@ -427,15 +427,20 @@
 </ul>
 <p>一些名词解释：</p>
 <ul>
-<li>IPC<br>  进程间通信（IPC，Inter-Process Communication），指至少两个进程或线程间传送数据或信号的一些技术或方法。进程是计算机系统分配资源的最小单位(严格说来是线程)。每个进程都有自己的一部分独立的系统资源，彼此是隔离的。为了能使不同的进程互相访问资源并进行协调工作，才有了进程间通信。<br>  优点：<ul>
+<li><p>IPC<br>  进程间通信（IPC，Inter-Process Communication），指至少两个进程或线程间传送数据或信号的一些技术或方法。进程是计算机系统分配资源的最小单位(严格说来是线程)。每个进程都有自己的一部分独立的系统资源，彼此是隔离的。为了能使不同的进程互相访问资源并进行协调工作，才有了进程间通信。</p>
+<p>  优点：</p>
+<ul>
 <li>信息共享：Web服务器，通过网页浏览器使用进程间通信来共享web文件（网页等）和多媒体；</li>
 <li>加速：维基百科使用通过进程间通信进行交流的多服务器来满足用户的请求；</li>
 <li>模块化;</li>
-<li>私有权分离<br>缺点：</li>
+<li><p>私有权分离</p>
+<p>缺点：</p>
+</li>
 <li>采用了某种形式的内核开销，降低了性能;</li>
 <li>几乎大部分IPC都不是程序设计的自然扩展，往往会大大地增加程序的复杂度。</li>
 </ul>
 </li>
+<li>UDP<br>  用户数据报协议（英语：UserDatagramProtocol，缩写为UDP），又称用户数据报文协议，是一个简单的面向数据报的传输层协议</li>
 </ul>
 
       
