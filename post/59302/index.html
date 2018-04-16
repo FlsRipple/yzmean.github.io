@@ -94,7 +94,9 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://wx4.sinaimg.cn/large/006kIAZaly1fqef2dbpm4j312u0taq63.jpg">
 <meta property="og:image" content="http://wx3.sinaimg.cn/large/006kIAZaly1fqef2hszidj30py0czwnr.jpg">
-<meta property="og:updated_time" content="2018-04-16T05:27:41.194Z">
+<meta property="og:image" content="http://wx1.sinaimg.cn/large/006kIAZaly1fqefusyt5aj31fo0p612b.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/large/006kIAZaly1fqeg1k43gaj318y0lyafm.jpg">
+<meta property="og:updated_time" content="2018-04-16T05:58:08.601Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Greenplum笔记(一)-体系结构">
 <meta name="twitter:image" content="http://wx4.sinaimg.cn/large/006kIAZaly1fqef2dbpm4j312u0taq63.jpg">
@@ -413,8 +415,8 @@
         <p><img src="http://wx4.sinaimg.cn/large/006kIAZaly1fqef2dbpm4j312u0taq63.jpg" alt=""><br><a id="more"></a></p>
 <h1 id="分布式数据库架构"><a href="#分布式数据库架构" class="headerlink" title="分布式数据库架构"></a>分布式数据库架构</h1><h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>分布式数据库主要特征为将数据分成多份放在多个数据节点，通过并行的SQL操作提高性能。<br>其中根据不同的节点之间对于内存磁盘资源的共享情况分为三类：</p>
 <ul>
-<li>共享内存(shared-memory)<br>  系统中所有内存和磁盘都是有多个处理器共享。</li>
-<li>共享磁盘(shared-disk)<br>  每个处理器有自己私有内存，但每个处理器都可以直接读写全部的磁盘存储。即处理器之间虽不能互相交互，但可通过高速网络与磁盘相连。</li>
+<li>共享内存(shared-memory)<br>  系统中<strong>所有</strong>内存和磁盘都是有多个处理器共享。</li>
+<li>共享磁盘(shared-disk)<br>  每个处理器有自己<strong>私有</strong>内存，但每个处理器都可以直接读写全部的磁盘存储。即处理器之间虽不能互相交互，但可通过高速网络与磁盘相连。</li>
 <li>不共享(shared-nothing)<br>  每个处理器相对独立，有自己的内存和存储，无法互相访问彼此内存和磁盘。</li>
 </ul>
 <p>还有其他的命名方式但总体概念相差不大<br><img src="http://wx3.sinaimg.cn/large/006kIAZaly1fqef2hszidj30py0czwnr.jpg" alt=""></p>
@@ -441,6 +443,32 @@
 </ul>
 </li>
 <li>UDP<br>  用户数据报协议（英语：UserDatagramProtocol，缩写为UDP），又称用户数据报文协议，是一个简单的面向数据报的传输层协议</li>
+</ul>
+<h1 id="分布式数据库可靠性"><a href="#分布式数据库可靠性" class="headerlink" title="分布式数据库可靠性"></a>分布式数据库可靠性</h1><h2 id="备份机制"><a href="#备份机制" class="headerlink" title="备份机制"></a>备份机制</h2><p>即当有节点出现故障时，<strong>及时</strong>启用备份节点代替主节点提供服务，以避免因为节点失效造成系统失控。</p>
+<p>GreenPlum中是配置镜像节点作为备份。</p>
+<h2 id="备份策略"><a href="#备份策略" class="headerlink" title="备份策略"></a>备份策略</h2><p>GreenPlum主要使用两种：</p>
+<ul>
+<li><p>Grouped Segment Mirror<br>  多台primary segment依次相邻交错存储。<br>  <img src="http://wx1.sinaimg.cn/large/006kIAZaly1fqefusyt5aj31fo0p612b.jpg" alt=""></p>
+</li>
+<li><p>Spread Segment Mirror<br>  将一台 primary segment 节点对应的所有节点按顺序打散到临接的机器上进行备份<br>  <img src="http://wx1.sinaimg.cn/large/006kIAZaly1fqeg1k43gaj318y0lyafm.jpg" alt=""><br>  当只有一个节点死机，系统仍会</p>
+</li>
+</ul>
+<h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><p>Grouped Mirror中若某一节点死机，则会造成其镜像所在节点消耗过大，容易成为系统性能瓶颈，但即便多台节点死机，系统仍可继续工作。</p>
+<p>但对于Spread Mirror来说，单一节点死机不会对系统造成过大损耗，但却不能有第二台节点死机，不然系统很可能会因节点与镜像皆死机而造成数据库死机。</p>
+<p>在一般情况下，在有限小组规模下，同时出现两台机器死机的情 况比较小，因而采用 Spread Mirror 方式会更好一点</p>
+<h2 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h2><p> 最新的 Greenplum 中，主备同步采用文件同步的方式，并且同步是<strong>强一致性</strong>的，也就是不论当前业务是否繁忙，同步工作都会进行。除非Primary节点出现故障，否则备份节点一直处于一种非活动状态。  </p>
+<h2 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h2><p>分布式数据库系统中的事务同集中式数据库系统中的事务一样， 也应该具有事务的ACID四个特性：</p>
+<ul>
+<li>A 原子性<ul>
+<li>分布式事务的原子性是指分布式事务执行时的不可分割性,保证了分布式数据库总是由一个一致状态转换到另一个一致状态</li>
+</ul>
+</li>
+<li>C 一致性<ul>
+<li>一致性是指分布式事务是使分布式数据库从一致状态转换为另一个一致状态的<strong>正确</strong>程序，如果分布式事务不能达到一个正确的结束状态那么就必须把分布式数据库恢复到该事务执行前的初始状态。</li>
+</ul>
+</li>
+<li>I 隔离性</li>
+<li>D 耐久性</li>
 </ul>
 
       
@@ -703,7 +731,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式数据库架构"><span class="nav-number">1.</span> <span class="nav-text">分布式数据库架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">1.1.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#greenplum的架构"><span class="nav-number">1.2.</span> <span class="nav-text">greenplum的架构</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式数据库架构"><span class="nav-number">1.</span> <span class="nav-text">分布式数据库架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">1.1.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#greenplum的架构"><span class="nav-number">1.2.</span> <span class="nav-text">greenplum的架构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式数据库可靠性"><span class="nav-number">2.</span> <span class="nav-text">分布式数据库可靠性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#备份机制"><span class="nav-number">2.1.</span> <span class="nav-text">备份机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#备份策略"><span class="nav-number">2.2.</span> <span class="nav-text">备份策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#比较"><span class="nav-number">2.2.1.</span> <span class="nav-text">比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步"><span class="nav-number">2.3.</span> <span class="nav-text">同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式事务"><span class="nav-number">2.4.</span> <span class="nav-text">分布式事务</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -735,7 +763,7 @@
 <br/>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共5.1k字</span>
+  <span class="post-count">博客全站共5.7k字</span>
 </div>
         
 
